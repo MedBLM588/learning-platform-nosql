@@ -20,7 +20,7 @@ Commençons par l'organisation pratique :
    git remote remove origin
    
    # Ajoutez votre dépôt comme nouvelle origine
-   git remote add origin https://github.com/[votre-compte]/learning-platform-nosql
+   git remote add origin https://github.com/MedBLM588/learning-platform-nosql.git
    
    # Poussez le code vers votre dépôt
    git push -u origin main
