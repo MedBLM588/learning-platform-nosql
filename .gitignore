@@ -1,3 +1,33 @@
-# Compléter ici !!!!???
+# Dépendances
+node_modules/
+jspm_packages/
 
-node_modules
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variables d'environnement
+.env
+.env.*.local
+
+# Build / Production
+dist/
+build/
+*.cache
+*.seed
+
+# Fichiers temporaires
+*.tmp
+*.temp
+*.bak
+
+# Mac / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Autres
+coverage/
