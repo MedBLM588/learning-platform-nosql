@@ -21,6 +21,44 @@ async function findOneById(collection, id) {
   }
 }
 
+
+async function getStats(collection) {
+  try {
+    const stats = await collection.aggregate([
+      {
+        // Étape 1 : Filtrer les documents où "title" existe et est de type chaîne
+        $match: {
+          title: { $exists: true, $type: "string" },
+        },
+      },
+      {
+        // Étape 2 : Grouper pour calculer les statistiques
+        $group: {
+          _id: null, // Groupe unique pour stats globales
+          totalCourses: { $sum: 1 }, // Compter les documents
+          avgTitleLength: { $avg: { $strLenCP: "$title" } }, // Longueur moyenne des titres
+        },
+      },
+      {
+        // Étape 3 : Projeter les champs nécessaires
+        $project: {
+          _id: 0,
+          totalCourses: 1,
+          avgTitleLength: 1,
+        },
+      },
+    ]).toArray();
+
+    // Retourne les stats ou des valeurs par défaut si aucun document n'est trouvé
+    return stats[0] || { totalCourses: 0, avgTitleLength: 0 };
+  } catch (error) {
+    console.error("Erreur lors de la récupération des statistiques :", error);
+    throw error;
+  }
+}
+
+
+
 /**
  * Insère un document dans la collection MongoDB
  * @param {Collection} collection
@@ -40,4 +78,5 @@ async function insertOne(collection, doc) {
 module.exports = {
   findOneById,
   insertOne,
+  getStats,
 };

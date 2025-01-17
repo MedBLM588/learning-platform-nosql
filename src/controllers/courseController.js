@@ -16,6 +16,7 @@ const { getDb } = require('../config/db');
 const mongoService = require('../services/mongoService');
 const { getRedisClient } = require('../config/db');
 const redisService = require('../services/redisService');
+const { ObjectId } = require('mongodb');
 
 async function createCourse(req, res) {
   try {
@@ -58,7 +59,54 @@ async function createCourse(req, res) {
   }
 }
 
+async function getCourse(req, res) {
+  try {
+    const { id } = req.params;
+
+    // Vérifiez si l'ID est valide
+    if (!id || !ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, message: "ID invalide fourni." });
+    }
+
+    const db = getDb();
+    const collection = db.collection("courses");
+
+    // Utilisez uniquement l'ID brut ici
+    const course = await mongoService.findOneById(collection, id);
+
+    if (!course) {
+      return res.status(404).json({ success: false, message: "Cours introuvable" });
+    }
+
+    return res.status(200).json({ success: true, data: course });
+  } catch (error) {
+    console.error("Erreur lors de la récupération du cours :", error);
+    return res.status(500).json({
+      success: false,
+      message: "Erreur lors de la récupération du cours",
+      error: error.message,
+    });
+  }
+}
+
+async function getCourseStats(req, res) {
+  try {
+    const db = getDb();
+    const collection = db.collection('courses');
+
+    const stats = await mongoService.getStats(collection);
+
+    return res.status(200).json({ success: true, data: stats });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Erreur lors de la récupération des statistiques', error: error.message });
+  }
+}
+
+
+
 // Export des contrôleurs
 module.exports = {
   createCourse,
+  getCourse,
+  getCourseStats,
 };
