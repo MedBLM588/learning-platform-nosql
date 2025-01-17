@@ -132,13 +132,13 @@ learning-platform-nosql/
 #### 1 - Lancement du Serveur
 ![Structure du projet](./src/assets/screenshots/lancementServeur.png)
 
-#### 2 - Les coures créer
+#### 2 - Les cours créer
 ![Liste des cours](./src/assets/screenshots/postmainCoursCreate.png)
 
-#### 3 - Listes des coures
+#### 3 - Détails d'un cours
 ![Gestion des erreurs](./src/assets/screenshots/Postmaincoursget.png)
 
-#### 4 - Les statistiques des coures
+#### 4 - Les statistiques
 ![Gestion des erreurs](./src/assets/screenshots/PostmaincoursStats.png)
 
 ## Auteur
